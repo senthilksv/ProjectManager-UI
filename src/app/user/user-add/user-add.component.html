@@ -1,0 +1,43 @@
+
+<div class="container">  
+  <div class="panel panel-primary">
+      <div class="panel-heading">User</div>
+      <div class="panel-body">
+  <form class="form-horizontal" #f="ngForm">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="firstName">First Name:</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" maxlength="50" id="firstName" name="firstName" 
+         [(ngModel)]="user.firstName" required placeholder="Enter First Name">
+      </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="taskpriority">Last Name:</label>      
+        <div class="col-sm-4">       
+            <input type="text" class="form-control" maxlength="50" id="lastName" name="lastName" 
+            [(ngModel)]="user.lastName" required placeholder="Enter Last Name">
+        </div>      
+      </div>
+      <div class="form-group">
+          <label class="control-label col-sm-2" for="taskStartDate">Employee Id:</label>
+          <div class="col-sm-2"> 
+              <input type="number" class="form-control" id="employeeId" onKeyPress="if(this.value.length==6) return false;"  name="employeeId" 
+              [(ngModel)]="user.employeeId" required placeholder="Enter Employee Id">      
+          </div>
+        </div>      
+    <div class="form-group"> 
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4 float-right" >
+        <button type="submit"  [disabled]="!f.valid" (click)="onAddUser()" class="btn btn-primary ">Add</button> &nbsp;
+        <button type="button" class="btn btn-warning "  (click)="onResetUser()">Reset</button>
+      </div>
+    </div>
+
+    <button type="button" #showmodalClick  class="btn btn-info btn-lg" style="display: none;"
+     id="showmodal" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  </form>
+  <hr style="border-color:#337ab7">
+  <app-user-view [users]="updatedUsers"></app-user-view>
+</div>
+</div>
+</div>
