@@ -12,6 +12,10 @@ import 'rxjs/add/operator/catch';
 export class UserAddComponent implements OnInit { 
   public user:User;
   public updatedUsers:User[];
+  public success:boolean = false;
+  public failure:boolean = false;
+  showAdd:boolean = true;
+  showUpdate:boolean = false;
   results:string
   constructor(private service:UserService,private router: Router) { 
     this.user = new User();
@@ -25,23 +29,53 @@ export class UserAddComponent implements OnInit {
     {     
       this.service.AddUser(this.user).subscribe(response => 
         {
-          this.results = response;
+          this.results = "User is added successfully and the id is " + response;
           console.log("result text:" + this.results);  
           this.user = new User();     
           this.onGetAllUsers()
-         // this.openModal();
+          this.success = true;        
         },
         error =>
-        {
-          console.log(error.status);
-          console.log(error.statusText);
-          console.log(error._body);
-          console.log(JSON.parse(error._body));
+        {         
           if(error.status < 200 || error.status > 300)
             this.results = JSON.parse(error._body);
-          //  this.openModal();
+            this.failure = true;          
         }
       );
+    }
+
+    onUpdateUser()
+    {     
+      this.service.EditUser(this.user, this.user.userId).subscribe(response => 
+        {
+          this.results = "User has been updated successfully for the user id " + response;
+          console.log("result text:" + this.results);  
+          this.user = new User();     
+          this.onGetAllUsers()
+          this.success = true;  
+          this.showUpdate = false;
+          this.showAdd = true;
+        },
+        error =>
+        {         
+          if(error.status < 200 || error.status > 300)
+            this.results = JSON.parse(error._body);
+            this.user = new User();    
+            this.failure = true;     
+            this.showUpdate = false;
+            this.showAdd = true;     
+        }
+      );
+    }
+
+    userSelectionChangedHandler(selectedUserId:number)
+    {
+      this.service.GetUser(selectedUserId).subscribe(
+        u => this.user= u);     
+        this.showUpdate = true;
+        this.showAdd = false;
+        this.success = false; 
+        this.failure = false;
     }
 
     onGetAllUsers()
@@ -52,6 +86,8 @@ export class UserAddComponent implements OnInit {
 
     onResetUser()
     {
-      this.user = new User();     
+      this.user = new User();  
+      this.showUpdate = false;
+      this.showAdd = true;      
     }   
 }

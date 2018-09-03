@@ -28,16 +28,21 @@
     <div class="form-group"> 
       <div class="col-sm-2"></div>
       <div class="col-sm-4 float-right" >
-        <button type="submit"  [disabled]="!f.valid" (click)="onAddUser()" class="btn btn-primary ">Add</button> &nbsp;
+        <button type="submit" *ngIf ="showAdd"  [disabled]="!f.valid" (click)="onAddUser()" class="btn btn-primary ">Add</button> &nbsp;
+        <button type="submit" *ngIf ="showUpdate" [disabled]="!f.valid" (click)="onUpdateUser()" class="btn btn-primary ">Update</button> &nbsp;
         <button type="button" class="btn btn-warning "  (click)="onResetUser()">Reset</button>
       </div>
     </div>
-
-    <button type="button" #showmodalClick  class="btn btn-info btn-lg" style="display: none;"
-     id="showmodal" data-toggle="modal" data-target="#myModal">Open Modal</button>
+    <div class="alert alert-success" *ngIf="success">       
+        <strong>Success!</strong> {{results}}
+      </div>
+      <div class="alert alert-danger" *ngIf="failure">         
+          <strong>Failure!</strong> {{results}}
+        </div>
+        <br>
   </form>
   <hr style="border-color:#337ab7">
-  <app-user-view [users]="updatedUsers"></app-user-view>
+  <app-user-view [users]="updatedUsers" (userSelectionChanged) = "userSelectionChangedHandler($event)"></app-user-view>
 </div>
 </div>
 </div>
