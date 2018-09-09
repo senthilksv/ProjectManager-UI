@@ -17,6 +17,8 @@ import { TaskService } from './SharedService/task.service';
 import { TaskmgrSearchPipe } from './pipes/taskmgr-search.pipe';
 import { UsersSearchPipe } from './pipes/users-search.pipe';
 import { UsersSortPipe } from './pipes/users-sort.pipe';
+import { ProjectsSearchPipe } from './pipes/projects-search.pipe';
+import { ProjectsSortPipe } from './pipes/projects-sort.pipe';
 
 const appRoutes:Routes=[
   {path:'',component:ProjectAddComponent},
@@ -40,7 +42,9 @@ const appRoutes:Routes=[
     TaskmgrEditComponent,
     TaskmgrSearchPipe,
     UsersSearchPipe,
-    UsersSortPipe
+    UsersSortPipe,
+    ProjectsSearchPipe,
+    ProjectsSortPipe
   ],
   
   imports: [

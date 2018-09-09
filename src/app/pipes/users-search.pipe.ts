@@ -18,20 +18,12 @@ export class UsersSearchPipe implements PipeTransform {
           else
           return false;
         }        
-        
-      /*  if (userSearch && item.lastName.toLowerCase()
-        .indexOf(userSearch.toLowerCase()) === -1)
-            return false;
-
-            if (userSearch && item.employeeId.toString()
-            .indexOf(userSearch) === -1)
-                return false;*/
        return true;
     })
   }
-  else{
-      return items;
-  }
+    else{
+        return items;
+    }
   }
 
 }
