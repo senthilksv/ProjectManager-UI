@@ -1,3 +1,6 @@
+import { User } from './user';
+import { Project } from './project';
+
 export class TaskDetail 
 {
     id:number;
@@ -7,5 +10,9 @@ export class TaskDetail
     priority:number;
     parentId:number;  
     parentName:string; 
-    endTask:boolean;
+    activeStatus:boolean;
+    projectId:number;
+    projectDetail : Project;
+    userId:number;   
+    userDetail:User;
 }

@@ -5,16 +5,25 @@ import { ProjectView } from '../models/project-view';
   name: 'projectsSearch'
 })
 export class ProjectsSearchPipe implements PipeTransform {
-
-  transform(users: ProjectView[], path: string[], order: number = 1): any {
-    if (!users || !path || !order) return users;
-
-    return users.sort((a: ProjectView, b: ProjectView) => {     
-      path.forEach(property => {
-        a = a[property];
-        b = b[property];
-      })     
-      return a > b ? order : order * (- 1);
+  transform(items: ProjectView[], projectSearch: any): any {
+    if (items && items.length){
+      return items.filter(item =>{ 
+        if (projectSearch)
+        {
+          if(item.projectName.toLowerCase().indexOf(projectSearch.toLowerCase()) === 0 || 
+          item.priority.toString().toLowerCase().indexOf(projectSearch.toLowerCase()) === 0 || 
+          item.numberOfTasks.toString().indexOf(projectSearch) === 0 || 
+          item.completedTasks.toString().indexOf(projectSearch) === 0 
+        )        
+          return true;
+          else
+          return false;
+        }        
+       return true;
     })
+  }
+    else{
+        return items;
+    }
   }
 }

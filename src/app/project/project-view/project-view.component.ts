@@ -47,19 +47,19 @@ export class ProjectViewComponent implements OnInit {
               projectToView.projectId = element.projectId;
               projectToView.projectName = element.projectName;
               projectToView.numberOfTasks = element.taskDetails.length;
-              projectToView.completedTasks = element.taskDetails.filter(t=> t.endTask).length;
+              projectToView.completedTasks = element.taskDetails.filter(t=> t.activeStatus == false).length;
              this.projectViews.push(projectToView);
             }); 
         }
      );
   }
 
-  onDeleteUser(projectId:number)
+  onDeleteProject(projectId:number)
   {   
-    if(window.confirm('Are sure you want to delete this project ?')){
+    if(window.confirm('Are sure you want to suspend this project ?')){
       this.service.DeleteProject(projectId).subscribe(response => 
         {
-          this.results = "Project has been deleted successfully for the project id " + response;
+          this.results = "Project has been suspended successfully for the project id " + response;
           console.log("result text:" + this.results); 
           window.alert(this.results);
           this.projectViews.splice(0);

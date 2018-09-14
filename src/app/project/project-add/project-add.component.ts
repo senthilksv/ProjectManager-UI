@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { Project } from '../../models/project';
 import { ProjectView } from '../../models/project-view';
 import { ProjectService } from '../../SharedService/project.service';
+
 import { UserService } from '../../SharedService/user.service';
 import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
@@ -84,7 +85,7 @@ export class ProjectAddComponent implements OnInit {
 
     this.service.AddProject(this.project).subscribe(response => 
       {
-        this.results = "project is added successfully and the id is " + response;
+        this.results = "Project is added successfully and the id is " + response;
         console.log("result text:" + this.results);  
         this.onResetProject();  
         this.projectsToView.splice(0);
@@ -185,7 +186,7 @@ export class ProjectAddComponent implements OnInit {
                 projectToView.projectId = element.projectId;
                 projectToView.projectName = element.projectName;
                 projectToView.numberOfTasks = element.taskDetails.length;
-                projectToView.completedTasks = element.taskDetails.filter(t=> t.endTask).length;
+                projectToView.completedTasks = element.taskDetails.filter(t=> !t.activeStatus).length;
                this.projectsToView.push(projectToView);
               }); 
           }
