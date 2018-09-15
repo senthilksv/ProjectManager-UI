@@ -7,7 +7,7 @@ import { TaskService } from '../../SharedService/task.service';
 import { UserService } from '../../SharedService/user.service';
 import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
-import { DatePipe } from '../../../../node_modules/@angular/common';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -17,6 +17,7 @@ import { DatePipe } from '../../../../node_modules/@angular/common';
 })
 export class TaskmgrAddComponent implements OnInit {
   @ViewChild('showmodalClick') showmodalClick:ElementRef;
+  @ViewChild('showParentTaskCheckbox') showParentTaskCheckbox:ElementRef;
   projectSearch :string;
   public projects:Project[];  
   public project:Project;
@@ -122,6 +123,7 @@ export class TaskmgrAddComponent implements OnInit {
     endDate.setDate(new Date().getDate() + 1);  
     this.taskDetail.startDate =  new Date();
     this.taskDetail.endDate = endDate;
+    this.showParentTaskCheckbox.nativeElement.checked = false;
   }
 
   onValidate()
@@ -190,7 +192,7 @@ export class TaskmgrAddComponent implements OnInit {
     onGetAllParentTask()
     {
       this.taskManagerService.GetParentList().subscribe(
-        u=>this.parentTaskDetails=u);
+        response=>this.parentTaskDetails=response.filter(resElement => resElement.activeStatus));
     }
    
 }

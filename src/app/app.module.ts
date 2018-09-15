@@ -20,6 +20,7 @@ import { UsersSortPipe } from './pipes/users-sort.pipe';
 import { ProjectsSearchPipe } from './pipes/projects-search.pipe';
 import { ProjectsSortPipe } from './pipes/projects-sort.pipe';
 import { ProjectNameSearchPipe } from './pipes/project-name-search.pipe';
+import { TaskmgrSortPipe } from './pipes/taskmgr-sort.pipe';
 
 const appRoutes:Routes=[
   {path:'',component:ProjectAddComponent},
@@ -46,7 +47,8 @@ const appRoutes:Routes=[
     UsersSortPipe,
     ProjectsSearchPipe,
     ProjectsSortPipe,
-    ProjectNameSearchPipe
+    ProjectNameSearchPipe,
+    TaskmgrSortPipe
   ],
   
   imports: [

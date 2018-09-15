@@ -6,7 +6,7 @@ import { ProjectService } from '../../SharedService/project.service';
 import { UserService } from '../../SharedService/user.service';
 import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
-import { DatePipe } from '../../../../node_modules/@angular/common';
+import { DatePipe } from '@angular/common';
 import { User } from '../../models/user';
 
 @Component({
