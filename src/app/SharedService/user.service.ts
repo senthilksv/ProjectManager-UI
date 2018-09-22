@@ -12,7 +12,9 @@ export class UserService {
 
   GetAllUsers():Observable<User[]>
   {   
-      return this.http.get(this.baseUrl).map(this.extractResponse);      
+    console.log('user service called');
+    
+      return this.http.get(this.baseUrl).map((data:Response)=><User[]>data.json());      
   }
 
   GetUser(Id:number):Observable<User>

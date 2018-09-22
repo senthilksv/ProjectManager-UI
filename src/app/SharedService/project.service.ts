@@ -12,7 +12,7 @@ export class ProjectService {
  
   GetAllProjects():Observable<Project[]>
   {   
-      return this.http.get(this.baseUrl).map(this.extractResponse);      
+      return this.http.get(this.baseUrl).map((data:Response)=><Project[]>data.json());      
   }
 
   GetProject(Id:number):Observable<Project>

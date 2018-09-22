@@ -16,12 +16,12 @@ export class TaskService {
 
   GetParentList():Observable<TaskDetail[]>
   {    
-     return this.http.get(this.baseUrl).map(this.extractData);
+     return this.http.get(this.baseUrl).map((data:Response)=><TaskDetail[]>data.json());
   }
 
   GetAllTasks():Observable<TaskDetail[]>
   {   
-      return this.http.get(this.baseUrl).map(this.extractData);      
+      return this.http.get(this.baseUrl).map((data:Response)=><TaskDetail[]>data.json());      
   }
 
   GetTask(Id:number):Observable<TaskDetail>
