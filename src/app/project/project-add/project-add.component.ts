@@ -2,9 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { Project } from '../../models/project';
 import { ProjectView } from '../../models/project-view';
 import { ProjectService } from '../../SharedService/project.service';
-
 import { UserService } from '../../SharedService/user.service';
-import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
 import { DatePipe } from '@angular/common';
 import { User } from '../../models/user';
@@ -29,7 +27,7 @@ export class ProjectAddComponent implements OnInit {
   showAdd:boolean = true;
   showUpdate:boolean = false;
   results:string
-  constructor(private service:ProjectService,private userService:UserService,private router: Router) {
+  constructor(private service:ProjectService,private userService:UserService) {
     this.project = new Project();
     this.project.priority = 0;  
    }
@@ -78,16 +76,17 @@ export class ProjectAddComponent implements OnInit {
    var projectEndDate = new Date(this.project.endDate);  
 
    if(this.enableDate && (projectEndDate <= projectStartDate ))
-    {
+    {     
       window.alert("End Date should not be prior/equal to start date");
       return false;
     }
-
+   
     this.service.AddProject(this.project).subscribe(response => 
       {
         this.results = "Project is added successfully and the id is " + response;
         console.log("result text:" + this.results);  
         this.onResetProject();  
+        console.log("result text:" + this.results);  
         this.projectsToView.splice(0);
         this.onGetAllProject()
         this.success = true;        
@@ -99,8 +98,7 @@ export class ProjectAddComponent implements OnInit {
           this.failure = true;          
       }
     );
-
-    console.log(this.project.startDate);
+    
   }
 
   onUpdateProject()
@@ -146,8 +144,7 @@ export class ProjectAddComponent implements OnInit {
       this.showAdd = true;  
       this.managerName = "";
       this.enableDate = false;
-      this.showDateCheckbox.nativeElement.checked = false;
-     
+      this.showDateCheckbox.nativeElement.checked = false;     
     }  
 
     onSearchManager()
@@ -178,7 +175,7 @@ export class ProjectAddComponent implements OnInit {
        projectResponse =>
           {
             (projectResponse as Project[]).forEach(element => 
-              {
+              {               
                 var projectToView = new ProjectView();
                 projectToView.priority = element.priority;
                 projectToView.startDate = element.startDate;
@@ -187,7 +184,7 @@ export class ProjectAddComponent implements OnInit {
                 projectToView.projectName = element.projectName;
                 projectToView.numberOfTasks = element.taskDetails.length;
                 projectToView.completedTasks = element.taskDetails.filter(t=> !t.activeStatus).length;
-               this.projectsToView.push(projectToView);
+                this.projectsToView.push(projectToView);               
               }); 
           }
        );

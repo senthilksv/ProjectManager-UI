@@ -1,10 +1,10 @@
 import { TestBed, getTestBed, async, inject } from '@angular/core/testing';
 import { UserService } from './user.service';
-import { HttpModule, Http, Response, ResponseOptions, XHRBackend, BaseRequestOptions, RequestMethod } from '../../../node_modules/@angular/http';
+import { HttpModule, Http, Response, ResponseOptions, XHRBackend, BaseRequestOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection} from  '@angular/http/testing';
 import { User } from '../models/user';
 
-fdescribe('UserService', () => {
+describe('UserService', () => {
   let mockBackend: MockBackend;
   beforeEach(() => {
     TestBed.configureTestingModule({

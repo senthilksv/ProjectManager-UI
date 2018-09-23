@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../SharedService/user.service';
-import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
 
 @Component({
@@ -17,7 +16,7 @@ export class UserAddComponent implements OnInit {
   showAdd:boolean = true;
   showUpdate:boolean = false;
   results:string
-  constructor(private service:UserService,private router: Router) { 
+  constructor(private service:UserService) { 
     this.user = new User();
   }
 
