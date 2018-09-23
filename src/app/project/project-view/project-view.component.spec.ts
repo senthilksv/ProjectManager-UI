@@ -11,7 +11,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ProjectsSearchPipe } from '../../pipes/projects-search.pipe'
 import { ProjectsSortPipe } from '../../pipes/projects-sort.pipe'
 
-fdescribe('ProjectViewComponent', () => {
+describe('ProjectViewComponent', () => {
   let component: ProjectViewComponent;
   let fixture: ComponentFixture<ProjectViewComponent>;
   let service : ProjectService; 
