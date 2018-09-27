@@ -28,6 +28,8 @@ export class TaskmgrEditComponent implements OnInit {
   managerName:string;
    projectName:string;
    isParentTaskSelected:boolean = false;
+   parentTaskSearch :string;
+   userSearch :string;
    public parentTaskDetails:TaskDetail[];
    public users:User[];
   constructor(private projectService:ProjectService,private userService:UserService,
