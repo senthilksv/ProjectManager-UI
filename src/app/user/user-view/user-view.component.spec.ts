@@ -45,8 +45,7 @@ describe('UserViewComponent', () => {
   });
 
   it('Delete User should return Success when confirm true', () =>
-  {
-   
+  {   
     spyOn(window,'confirm').and.returnValue(true);
     spyOn(window,'alert').and.stub()
     spyOn(service,'DeleteUser').and.returnValues(Observable.of("1"));
@@ -58,7 +57,7 @@ describe('UserViewComponent', () => {
     expect(window.confirm).toHaveBeenCalledWith('Are sure you want to delete this user ?');   
   });
 
-  it('Delete User should return Success when confirm false', () =>
+  it('Delete User should not delete when confirm false', () =>
   {   
     spyOn(window,'confirm').and.returnValue(false);
     component.onDeleteUser(1);       

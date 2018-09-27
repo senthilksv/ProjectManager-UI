@@ -50,7 +50,7 @@ export class TaskmgrViewComponent implements OnInit {
   onGetAllProjects()
   {
     this.projectService.GetAllProjects().subscribe(
-      p=>this.projects=p);
+      p=>this.projects=p.filter(pelement => pelement.activeStatus));
   }
 
   onSelectProject(selectedProject:Project)

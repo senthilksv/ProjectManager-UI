@@ -12,10 +12,9 @@ const USER : any =   { "userId": 1, "firstName": "User 1","lastName": "","employ
    "userDetail" : USER };
  
 
-  const TASK_DETAILS : any[] = [{ "id": 1, "name": "Task 1", "startDate": Date.now, 
-  "endDate" :Date.now, "priority":10, 
+  const TASK_DETAILS : any[] = [{ "id": 1, "name": "Task 1",  "priority":10, 
       "activeStatus":true, "parentId":2, "parentName":"parent", "userDetail" : USER,"projectDetail" : PROJECT },
-      { "id": 2, "name": "Task 2", "startDate": Date.now, "endDate" :Date.now, "priority":10, 
+      { "id": 2, "name": "Task 2", "priority":10, 
       "activeStatus":false, "parentId":2, "parentName":"parent","userDetail" : USER,"projectDetail" : PROJECT }
     ];    
 
@@ -25,9 +24,13 @@ export class MockTaskService {
         return Observable.of(TASK_DETAILS);
       }
 
-      public GetTask(): Observable<TaskDetail> {
-        return Observable.of(TASK_DETAIL);
+      public GetParentList(): Observable<TaskDetail[]> {
+        return Observable.of(TASK_DETAILS);
       }
+
+      public GetTask(): Observable<TaskDetail> {
+        return Observable.of(TASK_DETAILS[0]);
+    }
 
       public AddTask(Item:TaskDetail): Observable<string> {
         return Observable.of("Success");

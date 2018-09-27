@@ -6,10 +6,10 @@
       <a class="navbar-brand" href="#">{{ title }}</a>
     </div>
     <ul class="nav navbar-nav">
-        <li><a routerLink ="/addProject" style="cursor: pointer;" routerLinkActive="active" (click) ="onNaviagteToProjectAdd()">Add Project</a></li>
-        <li><a  routerLink ="/addTask" style="cursor: pointer;" routerLinkActive="active" (click) ="onNaviagteToTaskAdd()">Add Task</a></li>
-        <li><a routerLinkActive="active" routerLink ="/addUser" style="cursor: pointer;"  (click) ="onNaviagteToUserAdd()">Add User</a></li>
-        <li><a style="cursor: pointer;" routerLink ="/viewTask" routerLinkActive="active" (click) ="onNaviagteToTaskView()">View Task</a></li>
+        <li><a class="active" style="cursor: pointer;"  (click) ="onNaviagteToProjectAdd()">Add Project</a></li>
+        <li><a  style="cursor: pointer;"  (click) ="onNaviagteToTaskAdd()">Add Task</a></li>
+        <li><a style="cursor: pointer;"  (click) ="onNaviagteToUserAdd()">Add User</a></li>
+        <li><a  style="cursor: pointer;"  (click) ="onNaviagteToTaskView()">View Task</a></li>
     </ul>
   </div>
 </nav>

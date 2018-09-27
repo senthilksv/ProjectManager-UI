@@ -18,7 +18,7 @@ import { Router,ActivatedRoute} from '@angular/router';
 import { ProjectNameSearchPipe } from '../../pipes/project-name-search.pipe'
 import { UsersSearchPipe } from '../../pipes/users-search.pipe'
 
-fdescribe('TaskmgrAddComponent', () => {
+describe('TaskmgrAddComponent', () => {
   let component: TaskmgrAddComponent;
   let fixture: ComponentFixture<TaskmgrAddComponent>;
   let userService : UserService; 
@@ -46,6 +46,13 @@ fdescribe('TaskmgrAddComponent', () => {
       "startDate": "2018-07-23","endDate" :"2018-07-28", "priority":20, "userId" : 1, "activeStatus" : true
         }
     ];
+
+    const USERS : any[] = [
+      { "userId": 1, "firstName": "User 1","lastName": "","employeeId" : 10  },
+      { "userId": 2, "firstName": "User 2","lastName": "","employeeId" : 20  }
+    ];
+  
+    
 
     let mockRouter = {
       navigate: jasmine.createSpy('navigate')
@@ -102,4 +109,185 @@ fdescribe('TaskmgrAddComponent', () => {
     expect(component.projects.length).toBe(2);
   });
 
+  it('onAddTask should show validation alert', () =>
+  {
+    component.isParentTaskSelected = false;      
+    var startDate = new Date();
+    startDate.setDate(new Date().getDate() + 1);  
+    component.taskDetail.startDate =  startDate;
+    component.taskDetail.endDate = new Date();    
+    spyOn(window,'alert').and.stub();
+
+    var result = component.onAddTask();
+
+    expect(result).toBe(false);
+    expect(window.alert).toHaveBeenCalledWith("End Date should not be prior/equal to start date");
+  });
+
+ 
+
+  it('Add should return Success', () =>
+  {
+    component.isParentTaskSelected = true;   
+    spyOn(taskService,'AddTask').and.returnValue(Observable.of("1"));    
+    spyOn(component,"openModal").and.stub();
+
+    component.onAddTask();
+   
+    expect(component.results.length).toBeGreaterThan(0);
+    expect(component.openModal).toHaveBeenCalled();         
+  });
+
+  it('Add should return Bad Request', () =>
+  {
+    component.isParentTaskSelected = true;        
+    spyOn(component,"openModal").and.stub();
+    var error = { status: 400, _body :'"Bad Request"'};   
+    spyOn(taskService,'AddTask').and.returnValue(Observable.throw(error));
+
+    component.onAddTask();    
+    
+    expect(component.results).toBe("Bad Request");
+    expect(component.openModal).toHaveBeenCalled();          
+  });
+
+  it('Resetting Task Detail', () =>
+  {
+    var taskDetail = new TaskDetail() ;   
+    component.taskDetail = taskDetail;    
+    taskDetail.name ="task 1";
+    taskDetail.id = 1;
+    taskDetail.priority =10;
+    
+    component.onResetTask();   
+
+    expect(component.taskDetail.priority).toBe(0);
+    expect(component.taskDetail.id).toBeUndefined();
+    expect(component.taskDetail.name).toBeUndefined();  
+    expect(component.parentTaskName).toBe(""); 
+    expect(component.managerName).toBe(""); 
+    expect(component.projectName).toBe(""); 
+  })
+
+  it('should return false when task details are invalid for submit', () =>
+  {
+    var taskDetail = new TaskDetail();
+    component.taskDetail = taskDetail;
+    var result = component.onValidate();
+    expect(result).toBe(true);
+
+    taskDetail.name = "task 1";
+    console.log(component.taskDetail.name);
+    var result = component.onValidate();
+    expect(result).toBe(true);
+
+    taskDetail.userDetail = new User();
+    var result = component.onValidate();
+    expect(result).toBe(true);
+    taskDetail.startDate =  new Date();
+    
+    taskDetail.projectDetail = new Project();
+    
+    var endDate = new Date();
+    endDate.setDate(new Date().getDate() + 1);  
+    taskDetail.startDate =  new Date();
+    taskDetail.endDate = endDate;
+    var result = component.onValidate();
+   
+    expect(result).toBe(true);
+
+    taskDetail.priority = 1
+    var result = component.onValidate();
+    expect(result).toBe(true);
+
+    taskDetail.parentId = 1
+    var result = component.onValidate();
+    expect(result).toBe(false);
+  });
+
+  it('onSelectProject should set projectName', () =>
+  {
+    var project= new Project();
+    component.taskDetail = new TaskDetail();
+    project.projectId =1001;
+    project.projectName ="project 1";
+
+    component.onSelectProject(project);
+
+    expect(component.taskDetail.projectId).toBe(1001);
+    expect(component.projectName).toBe("project 1");
+  });
+
+  it('onSearchManager should have been called onGetAllUsers', () =>
+  {
+    spyOn(component,"onGetAllUsers").and.stub();
+    component.onSearchManager();
+
+    expect(component.onGetAllUsers).toHaveBeenCalled();
+  });
+
+  it('onSelectManager should set managername', () =>
+  {
+    var user= new User();
+    component.taskDetail = new TaskDetail();
+   
+    user.userId =1001;
+    user.firstName ="first";
+    user.lastName ="last";
+
+    component.onSelectManager(user);
+
+    expect(component.taskDetail.userId).toBe(1001);
+    expect(component.managerName).toBe("first last");
+  });
+
+  it('onSearchParent should have been called onGetAllParentTask', () =>
+  {
+    spyOn(component,"onGetAllParentTask").and.stub();
+    component.onSearchParent();
+
+    expect(component.onGetAllParentTask).toHaveBeenCalled();
+  });
+
+  it('onSelectParentTask should set parentTaskName', () =>
+  {
+    var parentTaskDetail= new TaskDetail();
+    parentTaskDetail.id = 1001;
+    parentTaskDetail.name = "parent task";
+    component.taskDetail = new TaskDetail();
+
+    component.onSelectParentTask(parentTaskDetail);
+
+    expect(component.taskDetail.parentId).toBe(1001);
+    expect(component.parentTaskName).toBe("parent task");
+  });
+
+  it('Should return users', () =>
+  {
+    spyOn(userService,'GetAllUsers').and.returnValues(Observable.of(USERS));
+
+    component.onSearchManager();    
+
+    expect(component.users.length).toBe(2);   
+    expect(userService.GetAllUsers).toHaveBeenCalled();
+  });
+
+  it('Should return active tasks 1', () =>
+  {
+    spyOn(taskService,'GetParentList').and.returnValues(Observable.of(TASK_DETAILS));
+    
+    component.onGetAllParentTask();    
+
+    expect(component.parentTaskDetails.length).toBe(1);   
+    expect(taskService.GetParentList).toHaveBeenCalled();
+  });
+
+  it('onAddTaskNavigateToView modal should go to view', () =>
+  {
+    component.onAddTaskNavigateToView();     
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/viewTask']);
+  })
+
 });
+
