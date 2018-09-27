@@ -30,6 +30,7 @@ export class ProjectAddComponent implements OnInit {
   constructor(private service:ProjectService,private userService:UserService) {
     this.project = new Project();
     this.project.priority = 0;  
+    this.project.activeStatus = true;  
    }
 
   ngOnInit() {

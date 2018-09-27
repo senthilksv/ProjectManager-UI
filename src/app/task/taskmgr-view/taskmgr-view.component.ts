@@ -59,7 +59,7 @@ export class TaskmgrViewComponent implements OnInit {
     this.projectName = selectedProject.projectName ;
     this.service.GetAllTasks().subscribe(response =>
       {        
-        (response as TaskDetail[]).filter(resElement => resElement.projectDetail.projectId !=  this.project.projectId).
+        (response as TaskDetail[]).filter(resElement => resElement.projectDetail.projectId ==  this.project.projectId).
         forEach(element =>
            {
              let taskDetail = (response as TaskDetail[]).find(res=> res.id == element.parentId);
@@ -70,7 +70,7 @@ export class TaskmgrViewComponent implements OnInit {
                
         }); 
         
-        this.taskDetailsFiltered = response.filter(resElement => resElement.projectDetail.projectId !=  this.project.projectId);
+        this.taskDetailsFiltered = response.filter(resElement => resElement.projectDetail.projectId ==  this.project.projectId);
         this.showError = false;
     },
     error =>
