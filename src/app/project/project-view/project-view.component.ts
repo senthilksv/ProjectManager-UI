@@ -57,6 +57,7 @@ export class ProjectViewComponent implements OnInit {
   onDeleteProject(projectId:number)
   {   
     if(window.confirm('Are sure you want to suspend this project ?')){
+     
       this.service.DeleteProject(projectId).subscribe(response => 
         {
           this.results = "Project has been suspended successfully for the project id " + response;

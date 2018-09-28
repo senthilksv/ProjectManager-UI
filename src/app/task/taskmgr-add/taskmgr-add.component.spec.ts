@@ -17,6 +17,7 @@ import { User } from '../../models/user';
 import { Router,ActivatedRoute} from '@angular/router';
 import { ProjectNameSearchPipe } from '../../pipes/project-name-search.pipe'
 import { UsersSearchPipe } from '../../pipes/users-search.pipe'
+import { TaskmgrSearchPipe } from '../../pipes/taskmgr-search.pipe'
 
 describe('TaskmgrAddComponent', () => {
   let component: TaskmgrAddComponent;
@@ -61,7 +62,7 @@ describe('TaskmgrAddComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ FormsModule, RouterTestingModule],
-      declarations: [ TaskmgrAddComponent,ProjectNameSearchPipe,UsersSearchPipe ] , 
+      declarations: [ TaskmgrAddComponent,ProjectNameSearchPipe,UsersSearchPipe,TaskmgrSearchPipe ] , 
       providers: [
         {provide: TaskService, useClass: MockTaskService},
         {provide: UserService, useClass: MockUserService},
